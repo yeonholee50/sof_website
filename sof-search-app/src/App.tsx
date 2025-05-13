@@ -5,10 +5,8 @@ import './App.css';
 import BackgroundAnimation from './components/BackgroundAnimation';
 import ResultsDisplay from './components/ResultsDisplay';
 
-// API base URL - use relative URL in development and absolute URL in production
-const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://sof-query.onrender.com' 
-  : '';
+// API base URL - always use the correct API domain in production
+const API_BASE_URL = 'https://sof-query.onrender.com';
 
 // Styled components
 const AppContainer = styled.div`
