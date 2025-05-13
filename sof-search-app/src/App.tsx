@@ -5,6 +5,11 @@ import './App.css';
 import BackgroundAnimation from './components/BackgroundAnimation';
 import ResultsDisplay from './components/ResultsDisplay';
 
+// API base URL - use relative URL in development and absolute URL in production
+const API_BASE_URL = process.env.NODE_ENV === 'production' 
+  ? 'https://sof-query.onrender.com' 
+  : '';
+
 // Styled components
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -138,7 +143,7 @@ function App() {
     setError(null);
     
     try {
-      let endpoint = '';
+      let endpoint = API_BASE_URL;
       
       // Determine which endpoint to use based on filled fields
       if (nameQuery) {
@@ -154,7 +159,15 @@ function App() {
         endpoint += '/name';
       }
       
-      const response = await axios.get(endpoint);
+      // Set up CORS headers for production environment
+      const config = process.env.NODE_ENV === 'production' ? {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+      } : {};
+      
+      const response = await axios.get(endpoint, config);
       setResults(response.data);
     } catch (err) {
       console.error('Error fetching data:', err);
